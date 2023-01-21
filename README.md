@@ -25,3 +25,14 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## Scope of the class
+
+-api calls 
+- promise vs observable
+- 
+| Promise  | Obsevable  | 
+|---|---|
+|eagerly evaluate| Lazily evaluated|
+|Single values will be returned (array of values,object of values,numbers,string)| ite will be returned as a stream of values|
+|Promise does not create memory leak|Observables creates memeory leak if not handled properly|

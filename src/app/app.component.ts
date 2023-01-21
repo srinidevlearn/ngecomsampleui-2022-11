@@ -1,10 +1,15 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss','./app.component2.scss']
 })
 export class AppComponent {
-  title = 'ecom';
+  constructor(private router:Router){}
+  title = 'Sample Ecomerce';
+  login(){
+    this.router.navigateByUrl('/auth/login');
+  }
 }

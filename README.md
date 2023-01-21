@@ -28,31 +28,11 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## Scope of the class
 
-- basic routing
-- lazyload routing
-- some cli commands
-  ```
-
-    ng g m <module-name> - for generating ngmodules
-
-    ng g c <component-name> - for generating components
-
-    ng g p <pipe-name> - for generating pipes
-
-    ng g s <service-name> - for generating services
-
-    ng g d <directive-name> for generating directives
-
-  ```
-
-  - angular forms has two types
-  - template driven forms
-  - reactive forms (most prefered)
-        - dynamic forms
-- directives
-  - structural directives - it will help us to change the DOM structure
-      - *ngIf,*ngSwitchCase(least used),*ngFor
-  - attribute directives - it will extend the behaviour of DOM.
-      - [ngClass],[ngStyle]
-
-- pipes are used to transform data on html
+-api calls 
+- promise vs observable
+- 
+| Promise  | Obsevable  | 
+|---|---|
+|eagerly evaluate| Lazily evaluated|
+|Single values will be returned (array of values,object of values,numbers,string)| ite will be returned as a stream of values|
+|Promise does not create memory leak|Observables creates memeory leak if not handled properly|

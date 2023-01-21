@@ -1,6 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { ApiService } from 'src/app/shared/api.service';
+import Swal from 'sweetalert2';
 import { ILogin } from '../models/login.interface';
 
 /**
@@ -15,48 +17,55 @@ import { ILogin } from '../models/login.interface';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit,OnDestroy {
-  loginModel:ILogin = {
+export class LoginComponent implements OnInit, OnDestroy {
+  loginModel: ILogin = {
     email: '',
-    password: ''
-  }  
+    password: '',
+  };
 
-  trackSubscription:Subscription;
+  trackSubscription: Subscription;
+  trackSubscription2!: Subscription;
 
-  loginForm:FormGroup
+  loginForm: FormGroup;
 
-
-  get emailField(){
-    return this.loginForm.get('email')
+  get emailField() {
+    return this.loginForm.get('email');
   }
-  get passwordField(){
-    return this.loginForm.get('password')
+  get passwordField() {
+    return this.loginForm.get('password');
   }
 
-  constructor(private fb:FormBuilder) {
+  constructor(private fb: FormBuilder, private api: ApiService) {
     this.loginForm = this.fb.group({
-      email:['',[Validators.required,Validators.minLength(2),Validators.email]],
-      password:['',[Validators.required,Validators.minLength(2)]]
+      email: [
+        'srini@gmail.com',
+        [Validators.required, Validators.minLength(2), Validators.email],
+      ],
+      password: ['123SD', [Validators.required, Validators.minLength(2)]],
     });
     // console.log(this.loginForm)
-    this.trackSubscription = this.loginForm.valueChanges.subscribe(d=>{
-    })
+    this.trackSubscription = this.loginForm.valueChanges.subscribe((d) => {});
   }
 
-
-  login(){
-    console.log(this.loginForm.value)
+  login() {
+    let temp: ILogin = this.loginForm.value;
+    this.trackSubscription2 = this.api.login(temp).subscribe((d) => {
+      let timerInterval: any;
+      Swal.fire({
+        title: 'Success!',
+        text: d?.data?.message,
+        icon: 'success',
+        timer: 2000,
+      });
+    });
   }
 
+  ngOnInit(): void {}
 
-  ngOnInit(): void {
-   
+  ngOnDestroy() {
+    if (this.trackSubscription) this.trackSubscription.unsubscribe();
+    if (this.trackSubscription2) this.trackSubscription2.unsubscribe();
   }
-
-  ngOnDestroy(){
-    if(this.trackSubscription) this.trackSubscription.unsubscribe();
-  }
-
 }

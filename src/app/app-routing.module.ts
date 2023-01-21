@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AdminGuard } from './shared/admin.guard';
+import { IsAuthorisedGuard } from './shared/is-authorised.guard';
 
 /**
  * auth - logins & registration
@@ -15,7 +17,15 @@ const routes: Routes = [
   {
     path: 'mgmt',
     loadChildren: () => import('./mgmt/mgmt.module').then((m) => m.MgmtModule),
+    canLoad:[IsAuthorisedGuard],
+    canActivate:[AdminGuard]
   },
+  
+  {
+    path: 'shopping',
+    loadChildren: () => import('./shopping/shopping.module').then((m) => m.ShoppingModule),
+    canLoad:[IsAuthorisedGuard]
+  },  
 ];
 
 @NgModule({

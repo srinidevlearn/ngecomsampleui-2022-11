@@ -6,7 +6,7 @@
         <div class="d-flex">
             
                 <div class="input-group flex-nowrap">
-                    <input type="text" class="form-control" placeholder="Search By Product Name" aria-label="Search By Product Name" aria-describedby="addon-wrapping">
+                    <input type="text" class="form-control" placeholder="Search By Product Name" aria-label="Search By Product Name" aria-describedby="addon-wrapping" [(ngModel)]="productNameTyped">
                     <span class="input-group-text" id="addon-wrapping">Search Products</span>
                   </div>
             
@@ -32,7 +32,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr class="text-" *ngFor="let product of products;let index= index" [ngClass]="product.isAvailable === false ? 'bg-danger':''">
+                    <tr class="text-" *ngFor="let product of (products | productNameFilter : productNameTyped );let index= index" [ngClass]="product.isAvailable === false ? 'bg-danger':''">
                         
 
                         <td>{{index+1}}</td>
@@ -44,7 +44,7 @@
                         <td>
                             <div class="d-flex justify-content-between">
                                 <button type="button" class="btn btn-primary"><i class="fa fa-eye"></i></button>
-                                <button type="button" class="btn btn-primary"><i class="fa fa-pencil"></i></button>
+                                <button type="button" class="btn btn-primary"><i class="fa fa-pencil" (click)="navigateToForm(product)"></i></button>
                                 <button type="button" class="btn btn-primary"><i class="fa fa-trash"></i></button>
                             </div>
                         </td>

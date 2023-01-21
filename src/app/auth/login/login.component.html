@@ -10,33 +10,51 @@
 
             </div> -->
             <div class="card-body">
-                <form [formGroup]="loginForm">
+              
+                
+                <div class="btn-group w-100" role="group" aria-label="Basic radio toggle button group">
+                    <input (click)="trackCahnge($event)" type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked value="admin">
+                    <label class="btn btn-outline-primary" for="btnradio1">Admin</label>
 
-                    <div class="form-group mb-2">
-                        <label class="form-label">Email<span class="text-danger small">&nbsp;*</span></label>
-                        <input type="text" class="form-control" formControlName="email">
-                        <div class="text-danger" *ngIf="emailField?.touched">
-                            <small class="d-block" *ngIf="emailField?.errors?.['email']"><span>*</span>Invalid Email</small>
-                            <small class="d-block"  *ngIf="emailField?.errors?.['minlength']"><span>*</span>Expecting atleast {{emailField?.errors?.['minlength']['requiredLength']}} characters</small>
-                            <small class="d-block"  *ngIf="emailField?.errors?.['required']"><span>*</span>Email is required</small>
+                    <input (click)="trackCahnge($event)"  type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" value="non-admin">
+                    <label class="btn btn-outline-primary" for="btnradio2">Non-Admin</label>
+                </div>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="loginForm">
+
+                        <div class="form-group mb-2">
+                            <label class="form-label">Email<span class="text-danger small">&nbsp;*</span></label>
+                            <input type="text" class="form-control" formControlName="email">
+                            <div class="text-danger" *ngIf="emailField?.touched">
+                                <small class="d-block" *ngIf="emailField?.errors?.['email']"><span>*</span>Invalid
+                                    Email</small>
+                                <small class="d-block" *ngIf="emailField?.errors?.['minlength']"><span>*</span>Expecting
+                                    atleast {{emailField?.errors?.['minlength']['requiredLength']}} characters</small>
+                                <small class="d-block" *ngIf="emailField?.errors?.['required']"><span>*</span>Email is
+                                    required</small>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Password <span class="text-danger small">&nbsp;*</span></label>
+                            <input type="password" class="form-control" formControlName="password">
+                            <div class="text-danger" *ngIf="passwordField?.touched">
+                                <small class="d-block"
+                                    *ngIf="passwordField?.errors?.['required']"><span>*</span>Password is
+                                    required</small>
+                                <small class="d-block"
+                                    *ngIf="passwordField?.errors?.['minlength']"><span>*</span>Expecting atleast
+                                    {{passwordField?.errors?.['minlength']['requiredLength']}} characters</small>
+
+                            </div>
 
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Password <span class="text-danger small">&nbsp;*</span></label>
-                        <input type="password" class="form-control" formControlName="password">
-                        <div class="text-danger" *ngIf="passwordField?.touched">
-                            <small class="d-block"  *ngIf="passwordField?.errors?.['required']"><span>*</span>Password is required</small>
-                            <small class="d-block"  *ngIf="passwordField?.errors?.['minlength']"><span>*</span>Expecting atleast {{passwordField?.errors?.['minlength']['requiredLength']}} characters</small>
-
-                        </div>
-    
-                    </div>
-                </form>
-            </div>
-            <div class="card-footer bg-transparent d-flex justify-content-end">
-                <button type="button" class="btn btn-primary" (click)="login()">Login</button>
+                    </form>
+                </div>
+                <div class="card-footer bg-transparent d-flex justify-content-end">
+                    <button type="button" class="btn btn-primary" (click)="login()">Login</button>
+                </div>
             </div>
         </div>
     </div>
-</div>

@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ApiService } from 'src/app/shared/api.service';
+import { JwthelperService } from 'src/app/shared/jwthelper.service';
 import Swal from 'sweetalert2';
 import { ILogin } from '../models/login.interface';
 
@@ -20,13 +22,25 @@ import { ILogin } from '../models/login.interface';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit, OnDestroy {
+
   loginModel: ILogin = {
     email: '',
     password: '',
   };
 
+  adminModel:ILogin = {
+    email: 'srini@gmail.com',
+    password:'123SD'
+  }
+  non_adminModel:ILogin ={
+    email: 'srini2@gmail.com',
+    password:'m38rmF$'
+  }
+
   trackSubscription: Subscription;
   trackSubscription2!: Subscription;
+
+  typeOfRole:string='';
 
   loginForm: FormGroup;
 
@@ -37,32 +51,65 @@ export class LoginComponent implements OnInit, OnDestroy {
     return this.loginForm.get('password');
   }
 
-  constructor(private fb: FormBuilder, private api: ApiService) {
+  constructor(
+    private fb: FormBuilder,
+    private api: ApiService,
+    private route: Router,
+    private jwt: JwthelperService
+  ) {
     this.loginForm = this.fb.group({
       email: [
-        'srini@gmail.com',
+        '',
         [Validators.required, Validators.minLength(2), Validators.email],
       ],
-      password: ['123SD', [Validators.required, Validators.minLength(2)]],
-    });
-    // console.log(this.loginForm)
+      password: ['', [Validators.required, Validators.minLength(2)]],
+     });
+
+     // how to update forms value
+    //  if(this.typeOfRole === 'admin')this.loginForm.patchValue(this.adminModel)
+    //  else this.loginForm.patchValue(this.non_adminModel)
+
+      
+
     this.trackSubscription = this.loginForm.valueChanges.subscribe((d) => {});
   }
 
+  trackCahnge(event:any){
+
+    if(event?.target.value === 'admin')this.loginForm.patchValue(this.adminModel)
+    else this.loginForm.patchValue(this.non_adminModel)
+  }
   login() {
     let temp: ILogin = this.loginForm.value;
     this.trackSubscription2 = this.api.login(temp).subscribe((d) => {
-      let timerInterval: any;
-      Swal.fire({
-        title: 'Success!',
-        text: d?.data?.message,
-        icon: 'success',
-        timer: 2000,
-      });
+      if (d?.data?.token) {
+        localStorage.setItem('token', d?.data?.token);
+        let parsed = this.jwt.parseToken(d?.data?.token);
+
+        Swal.fire({
+          title: 'Success!',
+          text: d?.data?.message,
+          icon: 'success',
+          // timer: 2000,
+        }).then((result) => {
+          if (result.isConfirmed) {
+           if (parsed?.user?.role && parsed?.user?.role.includes('admin'))
+              this.navigateToMgMt();
+            else this.navigateToShopping();
+          }
+        });
+      }
     });
   }
 
   ngOnInit(): void {}
+
+  navigateToMgMt() {
+    this.route.navigateByUrl('/mgmt/prd');
+  }
+  navigateToShopping() {
+    this.route.navigateByUrl('/shopping');
+  }
 
   ngOnDestroy() {
     if (this.trackSubscription) this.trackSubscription.unsubscribe();

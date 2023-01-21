@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login/login.component';
 import { RouterModule, Routes } from '@angular/router';
 import { RegistrationComponent } from './registration/registration.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { IsAuthorisedGuard } from '../shared/is-authorised.guard';
 
 const routes: Routes = [
   // lazy load routing or lazy loading
@@ -13,13 +14,13 @@ const routes: Routes = [
   },
   {
     path: 'register',
-    component: RegistrationComponent,
+    component: RegistrationComponent
   },
-  { path: '', redirectTo: 'register' }, // by default redirect happens for corresponding module
+  { path: '', redirectTo: 'login' }, // by default redirect happens for corresponding module
 ];
 
 @NgModule({
   declarations: [LoginComponent, RegistrationComponent],
-  imports: [CommonModule,ReactiveFormsModule, RouterModule.forChild(routes)],
+  imports: [CommonModule,ReactiveFormsModule, RouterModule.forChild(routes),FormsModule],
 })
 export class AuthModule {}

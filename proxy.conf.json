@@ -1,9 +1,0 @@
-{
-    "/api/": {
-        "target": "https://vercel-learn.vercel.app",
-        "secure": true,
-        "pathRewrite": {"^/api/" : "https://vercel-learn.vercel.app/api/"},
-        "changeOrigin": true,
-        "logLevel": "info"
-      }
-}

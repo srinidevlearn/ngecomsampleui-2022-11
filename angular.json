@@ -34,12 +34,9 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss",
-              "node_modules/sweetalert2/dist/sweetalert2.css"
+              "src/styles.scss"
             ],
-            "scripts": [
-              "node_modules/sweetalert2/dist/sweetalert2.js"
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {
